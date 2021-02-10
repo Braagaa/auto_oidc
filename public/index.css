@@ -1,0 +1,27 @@
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 97vh;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  width: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(63, 94, 251);
+  background: linear-gradient(
+    90deg,
+    rgba(63, 94, 251, 0.35944800283394607) 0%,
+    rgba(128, 0, 128, 0.3818569664193803) 100%
+  );
+}

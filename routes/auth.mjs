@@ -7,9 +7,8 @@ const Router = express.Router();
 Router.get("/", (_, res) => {
   res.render("template", {
     title: "Login",
-    header: "Hey, let's login",
     href: "/login",
-    button: "login",
+    button: "Login",
   });
 });
 
@@ -30,7 +29,6 @@ Router.get(
 Router.get("/dashboard", ensureLoggedIn("/login"), (_, res) => {
   res.render("template", {
     title: "Dashboard",
-    header: "Time to logout",
     href: "/logout",
     button: "logout",
   });

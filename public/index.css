@@ -1,3 +1,7 @@
+:root {
+  --main-color: rgb(50, 115, 220);
+}
+
 .app {
   display: flex;
   align-items: center;
@@ -12,16 +16,27 @@
 
 button {
   width: 100%;
+  background: white;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.1);
 }
 
 body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(63, 94, 251);
+  background: var(--main-color);
   background: linear-gradient(
     90deg,
-    rgba(63, 94, 251, 0.35944800283394607) 0%,
-    rgba(128, 0, 128, 0.3818569664193803) 100%
+    var(--main-color) 9%,
+    rgba(255, 255, 255, 1) 100%
   );
+}
+
+.logo {
+  margin-bottom: 1.5em;
 }

@@ -1,5 +1,5 @@
 doctype html
-html
+html(lang="en")
 	head
 		title= title
 		link(rel="stylesheet" href="light.min.css")
@@ -7,6 +7,6 @@ html
 	body
 		main.app
 			div.wrapper
-				h1= header
+				img.logo(src="logo.svg" alt="YYZ Logo")
 				form(action=href method="get")
 					button.login__button(type="submit")= button

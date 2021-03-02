@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r dotenv/config app.mjs",
-    "dev": "nodemon -r dotenv/config app.mjs"
+    "dev": "nodemon -r dotenv/config app.mjs",
+    "test": "mocha ./tests/specs/ --bail --timeout 30000"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "base64url": "^3.0.1",
+    "chromedriver": "^88.0.0",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
@@ -22,6 +24,10 @@
     "pug": "^3.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "chai": "^4.3.0",
+    "mocha": "^8.3.0",
+    "nodemon": "^2.0.7",
+    "randomstring": "^1.1.5",
+    "selenium-webdriver": "^4.0.0-beta.1"
   }
 }

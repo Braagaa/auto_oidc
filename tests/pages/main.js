@@ -1,6 +1,13 @@
+const Driver = require("./driver");
+const { until } = require("selenium-webdriver");
+
 module.exports = class Page {
   constructor(driver) {
     this.driver = driver;
+  }
+
+  async addVirtualAuthenticator() {
+    this.driver = await Driver.withAuthenticator(this.driver);
   }
 
   async open(url) {
@@ -13,6 +20,10 @@ module.exports = class Page {
 
   async getUrl() {
     return await this.driver.getCurrentUrl();
+  }
+
+  async waitForUrl(path, timeout = 10000) {
+    return this.driver.wait(until.urlContains(path), timeout);
   }
 
   async findElementAndGetText(selector) {

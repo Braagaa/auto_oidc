@@ -7,6 +7,7 @@ module.exports = class OIDC extends Page {
     loginIdOtherAction: { css: ".otheraction" },
     loginIdMainAction: { css: "button" },
     usernameInput: { xpath: "//input" },
+    errorSection: { css: ".error-section" },
   };
 
   static actionTypes = {
@@ -14,12 +15,17 @@ module.exports = class OIDC extends Page {
     LOGIN: "Login",
   };
 
-  static withAuthenticator() {
-    return new OIDC(Driver.withAuthenticator());
+  static withCromeDriver(baseURL) {
+    return new OIDC(Driver.chromeDriver(), baseURL);
   }
 
-  constructor(driver) {
+  constructor(driver, baseURL) {
     super(driver);
+    this.baseURL = baseURL;
+  }
+
+  async open() {
+    await super.open(this.baseURL);
   }
 
   async makeMainAction(type) {
@@ -36,5 +42,19 @@ module.exports = class OIDC extends Page {
     await this.findElementAndClick(OIDC.selectors.mainLoginButton);
     await this.makeMainAction(OIDC.actionTypes.REGISTER);
     await this.findElementAndType(OIDC.selectors.usernameInput, username);
+    await this.findElementAndClick(OIDC.selectors.loginIdMainAction);
+    await this.waitForUrl(this.baseURL + "/dashboard");
+  }
+
+  async login() {
+    await this.driver.sleep(1500);
+    await this.findElementAndClick(OIDC.selectors.mainLoginButton);
+    await this.waitForUrl("/loginid/login?challenge");
+    await this.waitForUrl(this.baseURL + "/dashboard");
+  }
+
+  async logout() {
+    await this.findElementAndClick(OIDC.selectors.mainLoginButton);
+    await this.waitForUrl(this.baseURL);
   }
 };

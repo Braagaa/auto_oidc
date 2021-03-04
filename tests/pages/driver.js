@@ -3,31 +3,30 @@ const webdriver = require("selenium-webdriver");
 const { Command } = require("selenium-webdriver/lib/Command");
 
 module.exports = class Driver {
-  static withAuthenticator() {
+  static chromeDriver() {
     const driver = new webdriver.Builder().forBrowser("chrome").build();
-    const session = driver.getSession();
+    return driver;
+  }
 
-    console.log(session);
+  static async withAuthenticator(driver) {
+    const sessionId = (await driver.getSession()).id_;
 
     driver
       .getExecutor()
       .defineCommand(
         "AddVirtualAuthenticator",
         "POST",
-        "/session/:sessionId/webauthn/authenticator"
+        `/session/${sessionId}/webauthn/authenticator`
       );
 
     const addVirtualAuthCommand = new Command("AddVirtualAuthenticator");
-    addVirtualAuthCommand.setParameters({
-      protocol: "ctap2",
-      transport: "internal",
-      hasResidentKey: true,
-      isUserVerified: true,
-      hasUserVerification: true,
-      isUserConsenting: true,
-    });
-
-    driver.getExecutor().execute(addVirtualAuthCommand);
+    addVirtualAuthCommand.setParameter("protocol", "ctap2");
+    addVirtualAuthCommand.setParameter("transport", "internal");
+    addVirtualAuthCommand.setParameter("hasResidentKey", true);
+    addVirtualAuthCommand.setParameter("isUserConsenting", true);
+    addVirtualAuthCommand.setParameter("isUserVerified", true);
+    addVirtualAuthCommand.setParameter("hasUserVerification", true);
+    await driver.getExecutor().execute(addVirtualAuthCommand);
 
     return driver;
   }

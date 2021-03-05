@@ -57,4 +57,18 @@ module.exports = class OIDC extends Page {
     await this.findElementAndClick(OIDC.selectors.mainLoginButton);
     await this.waitForUrl(this.baseURL);
   }
+
+  async cancelRegister(username) {
+    await this.findElementAndClick(OIDC.selectors.mainLoginButton);
+    await this.makeMainAction(OIDC.actionTypes.REGISTER);
+    await this.findElementAndType(OIDC.selectors.usernameInput, username);
+    await this.setUserVerified(false);
+
+    const mainAction = this.driver.findElement(
+      OIDC.selectors.loginIdMainAction
+    );
+    await mainAction.click();
+    await this.setUserVerified(true);
+    await mainAction.click();
+  }
 };

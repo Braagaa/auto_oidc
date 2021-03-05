@@ -4,10 +4,23 @@ const { until } = require("selenium-webdriver");
 module.exports = class Page {
   constructor(driver) {
     this.driver = driver;
+    this.authenticatorId = null;
   }
 
   async addVirtualAuthenticator() {
-    this.driver = await Driver.withAuthenticator(this.driver);
+    Driver.withAuthenticator(this.driver);
+    const { authenticatorId } = await Driver.addVirtualAuthenticator(
+      this.driver
+    );
+    this.authenticatorId = authenticatorId;
+  }
+
+  async setUserVerified(isUserVerified) {
+    await Driver.setUserVerified(
+      this.driver,
+      this.authenticatorId,
+      isUserVerified
+    );
   }
 
   async open(url) {

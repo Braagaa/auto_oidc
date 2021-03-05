@@ -70,5 +70,16 @@ module.exports = class OIDC extends Page {
     await mainAction.click();
     await this.setUserVerified(true);
     await mainAction.click();
+    await this.waitForUrl(this.baseURL + "/dashboard");
+  }
+
+  async cancelLogin() {
+    await this.driver.sleep(1500);
+    await this.findElementAndClick(OIDC.selectors.mainLoginButton);
+    await this.setUserVerified(false);
+    await this.waitForUrl("/loginid/login?challenge");
+    await this.setUserVerified(true);
+    await this.findElementAndClick(OIDC.selectors.loginIdMainAction);
+    await this.waitForUrl(this.baseURL + "/dashboard");
   }
 };

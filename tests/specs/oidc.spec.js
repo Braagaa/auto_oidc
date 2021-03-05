@@ -6,6 +6,7 @@ const OIDC = require("../pages/oidc");
 //put this in .env file
 const URL = process.env.TEST_URL;
 const username = randomstring.generate(7);
+const username1 = randomstring.generate(7);
 let oidc = OIDC.withCromeDriver(URL);
 
 describe("To Dashboard", () => {
@@ -95,6 +96,34 @@ describe("Login", () => {
   it("Should logout successfully", async () => {
     await oidc.logout();
     expect(await oidc.getUrl()).to.eq(URL + "/");
+  });
+
+  after(async () => {
+    await oidc.close();
+  });
+});
+
+describe("Cancelled Register", () => {
+  before(async () => {
+    oidc = OIDC.withCromeDriver(URL);
+    await oidc.addVirtualAuthenticator();
+    await oidc.open();
+  });
+
+  it("Should register after retying cancelled prompt", async () => {
+    await oidc.cancelRegister(username1);
+    expect(await oidc.getUrl()).to.eq(URL + "/dashboard");
+  });
+
+  after(async () => {
+    await oidc.logout();
+  });
+});
+
+describe("Cancelled Login", () => {
+  it("Should login after retying cancelled prompt", async () => {
+    await oidc.cancelLogin();
+    expect(await oidc.getUrl()).to.eq(URL + "/dashboard");
   });
 });
 

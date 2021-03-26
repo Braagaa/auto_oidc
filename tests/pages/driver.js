@@ -1,4 +1,5 @@
 require("chromedriver");
+require("ms-chromium-edge-driver");
 const webdriver = require("selenium-webdriver");
 const { Command } = require("selenium-webdriver/lib/Command");
 
@@ -10,6 +11,11 @@ module.exports = class Driver {
 
   static chromeDriver() {
     const driver = new webdriver.Builder().forBrowser("chrome").build();
+    return driver;
+  }
+
+  static edgeDriver() {
+    const driver = new webdriver.Builder().forBrowser("edge").build();
     return driver;
   }
 

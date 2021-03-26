@@ -22,6 +22,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use("/", authRoutes);
 
+app.use((err, req, res, next) => {
+  res.status(500).json(err);
+});
+
 app.listen(app.get("port"), () => {
   console.log(`Listening on port ${app.get("port")}`);
 });

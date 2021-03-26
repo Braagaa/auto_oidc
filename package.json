@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node -r dotenv/config app.mjs",
     "dev": "nodemon -r dotenv/config app.mjs",
-    "test": "mocha ./tests/specs/ --bail --timeout 30000"
+    "test": "mocha ./tests/specs/ --bail --timeout 30000",
+    "test1": "mocha ./tests/specs/oidc_edge.spec.js --bail --timeout 30000"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "chai": "^4.3.0",
     "mocha": "^8.3.0",
+    "ms-chromium-edge-driver": "^0.4.0",
     "nodemon": "^2.0.7",
     "randomstring": "^1.1.5",
     "selenium-webdriver": "^4.0.0-beta.1"

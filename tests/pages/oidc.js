@@ -19,6 +19,10 @@ module.exports = class OIDC extends Page {
     return new OIDC(Driver.chromeDriver(), baseURL);
   }
 
+  static withEdgeDriver(baseURL) {
+    return new OIDC(Driver.edgeDriver(), baseURL);
+  }
+
   constructor(driver, baseURL) {
     super(driver);
     this.baseURL = baseURL;

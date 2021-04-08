@@ -1,0 +1,9 @@
+extends template.pug
+
+block content
+	form(action="/login" method="get")
+		input(type="text" placeholder="API Key")
+		input(type="text" placeholder="Base URI")
+		input(type="text" placeholder="App Secret")
+		button.login__button(type="submit") Register/Login
+	script(src="/form.js")

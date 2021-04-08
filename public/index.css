@@ -9,9 +9,15 @@
   height: 97vh;
 }
 
-.wrapper {
+.wrapper,
+form {
   display: flex;
   flex-direction: column;
+}
+
+input[type="text"] {
+  margin-bottom: 0.5em;
+  background: white;
 }
 
 button {

@@ -1,19 +1,38 @@
 import express from "express";
-import passport from "../middleware/passport.mjs";
+import passport, { changeStrategy } from "../middleware/passport.mjs";
 import { ensureLoggedOut, ensureLoggedIn } from "connect-ensure-login";
+import base64url from "base64url";
 
 const Router = express.Router();
 
 Router.get("/", (_, res) => {
-  res.render("template", {
-    title: "Login",
-    href: "/login",
-    button: "Login",
-  });
+  res.render("login", { title: "Login" });
 });
 
 Router.get(
   "/login",
+  ensureLoggedOut("/dashboard"),
+  passport.authenticate("oauth2")
+);
+
+Router.post(
+  "/login",
+  (req, _, next) => {
+    const { apiKey, baseUri, appSecret } = req.body;
+    const options = {
+      clientID: apiKey,
+      clientSecret: appSecret,
+      callbackURL: process.env.LOGIN_REDIRECT_URI,
+      authorizationURL: `${baseUri}/oauth2/auth`,
+      tokenURL: `${baseUri}/oauth2/token`,
+      scope: process.env.LOGIN_SCOPES,
+      state: base64url(JSON.stringify({ state: apiKey })),
+      passReqToCallback: true,
+    };
+    console.log(options);
+    changeStrategy(options, baseUri);
+    next();
+  },
   ensureLoggedOut("/dashboard"),
   passport.authenticate("oauth2")
 );
@@ -27,11 +46,7 @@ Router.get(
 );
 
 Router.get("/dashboard", ensureLoggedIn("/login"), (_, res) => {
-  res.render("template", {
-    title: "Dashboard",
-    href: "/logout",
-    button: "logout",
-  });
+  res.render("logout", { title: "Dashboard" });
 });
 
 Router.get("/logout", (req, res) => {

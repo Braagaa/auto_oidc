@@ -26,27 +26,31 @@ const verify = (_, accessToken, refreshToken, params, profile, done) => {
   return done(null, false);
 };
 
-const strategy = new OAuth2Strategy(options, verify);
-strategy.userProfile = function (accessToken, done) {
-  this._oauth2._request(
-    "GET",
-    `${process.env.LOGIN_URI}/userinfo`,
-    null,
-    null,
-    accessToken,
-    (err, data) => {
-      if (err) return done(err);
-      try {
-        data = JSON.parse(data);
-      } catch (e) {
-        return done(e);
+export const changeStrategy = function (options, LOGIN_URI) {
+  const strategy = new OAuth2Strategy(options, verify);
+  strategy.userProfile = function (accessToken, done) {
+    this._oauth2._request(
+      "GET",
+      `${LOGIN_URI}/userinfo`,
+      null,
+      null,
+      accessToken,
+      (err, data) => {
+        if (err) return done(err);
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          return done(e);
+        }
+        done(null, data);
       }
-      done(null, data);
-    }
-  );
-};
+    );
+  };
 
-passport.use(strategy);
+  passport.use(strategy);
+};
+changeStrategy(options, process.env.LOGIN_URI);
+
 passport.serializeUser((user, done) => {
   done(null, user);
 });

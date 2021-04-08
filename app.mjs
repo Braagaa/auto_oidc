@@ -11,6 +11,7 @@ app.set("views", "./views");
 
 app.use(express.static("public"));
 app.use(cookie());
+app.use(express.json());
 app.use(
   session({
     secret: "dadsulplex",
@@ -22,7 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use("/", authRoutes);
 
-app.use((err, req, res, next) => {
+app.use((err, _, res, __) => {
   res.status(500).json(err);
 });
 

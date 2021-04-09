@@ -5,6 +5,9 @@ const OIDC = require("../pages/oidc");
 
 //put this in .env file
 const URL = process.env.TEST_URL;
+const LOGIN_APPID = process.env.LOGIN_APPID;
+const LOGIN_URI = process.env.LOGIN_URI;
+const LOGIN_APPSECRET = process.env.LOGIN_APPSECRET;
 const username = randomstring.generate(7);
 const username1 = randomstring.generate(7);
 let oidc = OIDC.withCromeDriver(URL);
@@ -12,6 +15,7 @@ let oidc = OIDC.withCromeDriver(URL);
 describe("To Dashboard", () => {
   it("Should go to OIDC dashboard when clicking on login", async () => {
     await oidc.open();
+    await oidc.configure(LOGIN_APPID, LOGIN_URI, LOGIN_APPSECRET);
     await oidc.findElementAndClick(OIDC.selectors.mainLoginButton);
     expect(await oidc.getUrl()).to.include("/loginid/login?challenge");
   });
@@ -25,6 +29,7 @@ describe("Dashboard Validations", () => {
     oidc = OIDC.withCromeDriver(URL);
     await oidc.addVirtualAuthenticator();
     await oidc.open();
+    await oidc.configure(LOGIN_APPID, LOGIN_URI, LOGIN_APPSECRET);
   });
 
   it("Should not register a user with empty name", async () => {
@@ -74,6 +79,7 @@ describe("Register", () => {
     oidc = OIDC.withCromeDriver(URL);
     await oidc.addVirtualAuthenticator();
     await oidc.open();
+    await oidc.configure(LOGIN_APPID, LOGIN_URI, LOGIN_APPSECRET);
   });
 
   it("Should successfully register on LoginID dashboard", async () => {
@@ -108,6 +114,7 @@ describe("Cancelled Register", () => {
     oidc = OIDC.withCromeDriver(URL);
     await oidc.addVirtualAuthenticator();
     await oidc.open();
+    await oidc.configure(LOGIN_APPID, LOGIN_URI, LOGIN_APPSECRET);
   });
 
   it("Should register after retying cancelled prompt", async () => {

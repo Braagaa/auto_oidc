@@ -29,11 +29,6 @@ button {
   width: 100%;
   background: white;
   border-radius: 4px;
-  transition: transform 0.2s;
-}
-
-button:hover {
-  transform: scale(1.1);
 }
 
 body {

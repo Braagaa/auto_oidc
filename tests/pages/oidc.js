@@ -8,6 +8,10 @@ module.exports = class OIDC extends Page {
     loginIdMainAction: { css: "button" },
     usernameInput: { xpath: "//input" },
     errorSection: { css: ".error-section" },
+    apiKeyInput: { css: "input[placeholder='API Key']" },
+    baseUriInput: { css: "input[placeholder='Base URI']" },
+    appSecretInput: { css: "input[placeholder='App Secret']" },
+    configButton: { css: ".configure__button" },
   };
 
   static actionTypes = {
@@ -42,6 +46,14 @@ module.exports = class OIDC extends Page {
     }
   }
 
+  async configure(apiKey, baseUri, appSecret) {
+    await this.findElementAndType(OIDC.selectors.apiKeyInput, apiKey);
+    await this.findElementAndType(OIDC.selectors.baseUriInput, baseUri);
+    await this.findElementAndType(OIDC.selectors.appSecretInput, appSecret);
+    await this.findElementAndClick(OIDC.selectors.configButton);
+    await this.driver.sleep(3000);
+  }
+
   async register(username) {
     await this.findElementAndClick(OIDC.selectors.mainLoginButton);
     await this.makeMainAction(OIDC.actionTypes.REGISTER);
@@ -58,6 +70,7 @@ module.exports = class OIDC extends Page {
   }
 
   async logout() {
+    await this.driver.sleep(2000);
     await this.findElementAndClick(OIDC.selectors.mainLoginButton);
     await this.waitForUrl(this.baseURL);
   }

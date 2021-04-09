@@ -1,9 +1,11 @@
 extends template.pug
 
 block content
-	form(action="/login" method="get")
+	form.config__form
 		input(type="text" placeholder="API Key")
 		input(type="text" placeholder="Base URI")
 		input(type="text" placeholder="App Secret")
+		button.configure__button Set Variables
+	form.authenticate__form(action="/login" method="get")
 		button.login__button(type="submit") Register/Login
 	script(src="/form.js")

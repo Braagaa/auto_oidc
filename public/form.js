@@ -1,13 +1,14 @@
 {
-  const formElm = document.querySelector("form");
+  const formElm = document.querySelector(".config__form");
   const [
     apiKeyInput,
     baseUriInput,
     appSecretInput,
   ] = document.getElementsByTagName("input");
 
-  formElm.addEventListener("submit", (event) => {
-    fetch("/login", {
+  formElm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const res = await fetch("/configure", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -16,5 +17,6 @@
         appSecret: appSecretInput.value,
       }),
     });
+    console.log(res);
   });
 }

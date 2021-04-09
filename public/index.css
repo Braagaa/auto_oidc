@@ -13,11 +13,16 @@
 form {
   display: flex;
   flex-direction: column;
+  margin-bottom: 0;
 }
 
 input[type="text"] {
   margin-bottom: 0.5em;
   background: white;
+}
+
+.configure__button {
+  margin-bottom: 0.5em;
 }
 
 button {

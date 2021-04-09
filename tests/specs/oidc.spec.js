@@ -29,7 +29,6 @@ describe("Dashboard Validations", () => {
     oidc = OIDC.withCromeDriver(URL);
     await oidc.addVirtualAuthenticator();
     await oidc.open();
-    await oidc.configure(LOGIN_APPID, LOGIN_URI, LOGIN_APPSECRET);
   });
 
   it("Should not register a user with empty name", async () => {
@@ -79,7 +78,6 @@ describe("Register", () => {
     oidc = OIDC.withCromeDriver(URL);
     await oidc.addVirtualAuthenticator();
     await oidc.open();
-    await oidc.configure(LOGIN_APPID, LOGIN_URI, LOGIN_APPSECRET);
   });
 
   it("Should successfully register on LoginID dashboard", async () => {
@@ -114,7 +112,6 @@ describe("Cancelled Register", () => {
     oidc = OIDC.withCromeDriver(URL);
     await oidc.addVirtualAuthenticator();
     await oidc.open();
-    await oidc.configure(LOGIN_APPID, LOGIN_URI, LOGIN_APPSECRET);
   });
 
   it("Should register after retying cancelled prompt", async () => {

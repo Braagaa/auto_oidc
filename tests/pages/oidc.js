@@ -70,7 +70,6 @@ module.exports = class OIDC extends Page {
   }
 
   async logout() {
-    await this.driver.sleep(2000);
     await this.findElementAndClick(OIDC.selectors.mainLoginButton);
     await this.waitForUrl(this.baseURL);
   }
@@ -91,7 +90,8 @@ module.exports = class OIDC extends Page {
   }
 
   async cancelLogin() {
-    await this.driver.sleep(1500);
+    await this.waitForElement(OIDC.selectors.mainLoginButton);
+    await this.driver.sleep(2000);
     await this.findElementAndClick(OIDC.selectors.mainLoginButton);
     await this.setUserVerified(false);
     await this.waitForUrl("/loginid/login?challenge");

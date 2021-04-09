@@ -50,4 +50,8 @@ module.exports = class Page {
   async findElementAndType(selector, text) {
     await this.driver.findElement(selector).then((elm) => elm.sendKeys(text));
   }
+
+  async waitForElement(selector) {
+    await this.driver.wait(until.elementLocated(selector));
+  }
 };

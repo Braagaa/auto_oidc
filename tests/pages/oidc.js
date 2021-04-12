@@ -90,6 +90,7 @@ module.exports = class OIDC extends Page {
   }
 
   async cancelLogin() {
+    await this.driver.sleep(2000);
     await this.waitForElement(OIDC.selectors.mainLoginButton);
     await this.driver.sleep(2000);
     await this.findElementAndClick(OIDC.selectors.mainLoginButton);
